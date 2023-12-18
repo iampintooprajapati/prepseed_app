@@ -9,7 +9,7 @@ import 'package:prepseed_app/repository/auth_repo.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthRepo repo = AuthRepoImpl();
 
-  AuthBloc() : super(AuthInitialState()) {
+  AuthBloc(this.repo) : super(AuthInitialState()) {
     on<AuthSubmitEvent>(_onAuthSubmit);
   }
 
@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoadingState());
       dynamic jsonData;
       jsonData = await repo.login(event.loginModel);
-      dynamic data = jsonDecode(jsonData['token']);
+      dynamic data = jsonDecode(jsonData['data']);
       await data;
       emit(AuthSuccessState(
         msg: jsonData['message'],

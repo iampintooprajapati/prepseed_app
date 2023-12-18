@@ -5,11 +5,13 @@ import 'package:prepseed_app/bloc/login/auth_event.dart';
 import 'package:prepseed_app/bloc/login/auth_state.dart';
 import 'package:prepseed_app/models/auth_model.dart';
 import 'package:prepseed_app/ui/auth/register.dart';
+import 'package:prepseed_app/ui/home/home.dart';
 import 'package:prepseed_app/ui/intro/introduction.dart';
 import 'package:prepseed_app/utlis/app_colors.dart';
 import 'package:prepseed_app/utlis/app_constant.dart';
 import 'package:prepseed_app/utlis/app_fonts.dart';
 import 'package:prepseed_app/utlis/app_imagestring.dart';
+import 'package:prepseed_app/utlis/app_toast.dart';
 import 'package:prepseed_app/widgets/bg_container.dart';
 import 'package:prepseed_app/widgets/custom_input_form.dart';
 
@@ -27,17 +29,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final controller = ScrollController();
 
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   late AuthBloc loginBloc;
 
+  bool _obsecureText = true;
+
+  void _toggleObscured() {
+    setState(() {
+      _obsecureText = !_obsecureText;
+    });
+  }
+
   @override
   void initState() {
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
     loginBloc = context.read<AuthBloc>();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
   }
 
   @override
@@ -51,17 +65,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   const CircularProgressIndicator();
                 }
                 if (state is AuthErrorState) {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const IntroductionScreen()));
+                  AppToast.instance.showError(context, state.msg);
                 }
 
                 if (state is AuthSuccessState) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RegisterScreen()));
+                          builder: (context) => const HomeScreen()));
                 }
               },
               builder: (context, state) {
@@ -153,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                         CustomInputForm(
                                           hint: "Enter password",
+                                          obscureText: _obsecureText,
                                           controller: passwordController,
                                           validator: (value) {
                                             if (value == "" ||
@@ -163,6 +175,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                               return null;
                                             }
                                           },
+                                          suffixIcon: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: GestureDetector(
+                                              onTap: _toggleObscured,
+                                              child: Icon(
+                                                _obsecureText
+                                                    ? Icons.lock
+                                                    : Icons.remove_red_eye,
+                                                size: 12,
+                                                color: AppColors.blue,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                         const SizedBox(
                                           height: 8,
@@ -271,14 +296,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                             if (formKay.currentState
                                                     ?.validate() ??
                                                 false) {
-                                              AuthSubmitEvent(
+                                              loginBloc.add(AuthSubmitEvent(
                                                 loginModel: AuthModel(
                                                     email: emailController.text
                                                         .trim(),
                                                     password: passwordController
                                                         .text
                                                         .trim()),
-                                              );
+                                              ));
                                             }
                                           },
                                           style: OutlinedButton.styleFrom(

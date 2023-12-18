@@ -13,9 +13,10 @@ abstract class AuthRepo {
 class AuthRepoImpl extends AuthRepo {
   @override
   Future login(AuthModel authModel) async {
-    Map<String, dynamic> body = authModel.toJson();
+    final body = {"email": authModel.email, "password": authModel.password};
     http.Response response =
         await AuthClient.instance.doPost(ApiConstant.login, body);
+
     print("check0");
     if (response.statusCode == 200) {
       dynamic jsonData = jsonDecode(response.body);
@@ -26,8 +27,16 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future register(AuthModel authModel) {
-    // TODO: implement register
-    throw UnimplementedError();
+  Future register(AuthModel authModel) async {
+    final body = {"email": authModel.email, "password": authModel.password};
+    http.Response response =
+        await AuthClient.instance.doPost(ApiConstant.register, body);
+    print("check0");
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      return jsonData;
+    } else {
+      throw response.statusCode;
+    }
   }
 }

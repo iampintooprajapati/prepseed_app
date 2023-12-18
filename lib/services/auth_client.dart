@@ -13,7 +13,7 @@ class AuthClient {
   Future<http.Response> doPost(String url, Map<String, dynamic> body,
       {Map<String, String>? header}) {
     Map<String, String> head = {
-      "content-type": "application/json",
+      "content-type": 'application/json',
       "Connection": "keep-alive"
     };
     String data = json.encode(body);

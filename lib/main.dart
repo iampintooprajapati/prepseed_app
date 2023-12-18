@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prepseed_app/bloc/login/auth_bloc.dart';
+import 'package:prepseed_app/bloc/register/register_bloc.dart';
+import 'package:prepseed_app/repository/auth_repo.dart';
 import 'package:prepseed_app/ui/intro/introduction.dart';
 
 void main() {
@@ -10,11 +12,14 @@ void main() {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp(BlocProvider(
-    create: (context) => AuthBloc(),
+    create: (context) => AuthBloc(AuthRepoImpl()),
     child: MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => AuthBloc(),
+          create: (context) => AuthBloc(AuthRepoImpl()),
+        ),
+        BlocProvider(
+          create: (context) => RegisterBloc(AuthRepoImpl()),
         ),
       ],
       child: const MyApp(),

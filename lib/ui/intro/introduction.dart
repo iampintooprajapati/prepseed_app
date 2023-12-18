@@ -36,12 +36,10 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
               height: 55,
               child: ElevatedButton(
                 onPressed: () {
-                  Future.delayed(
-                      const Duration(seconds: 2),
-                      () => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen())));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
                 },
                 style: OutlinedButton.styleFrom(
                     backgroundColor: AppColors.blue,

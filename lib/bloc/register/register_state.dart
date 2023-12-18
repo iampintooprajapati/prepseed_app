@@ -1,28 +1,28 @@
 import 'package:equatable/equatable.dart';
 import 'package:prepseed_app/models/auth_model.dart';
 
-abstract class AuthState extends Equatable {}
+abstract class RegisterState extends Equatable {}
 
-class AuthInitialState extends AuthState {
+class RegisterInitialState extends RegisterState {
   @override
   List<Object?> get props => [];
 }
 
-class AuthSuccessState extends AuthState {
+class RegisterSuccessState extends RegisterState {
   String msg;
-  AuthSuccessState({required this.msg});
+  RegisterSuccessState({required this.msg});
   @override
   List<Object?> get props => [msg];
 }
 
-class AuthLoadingState extends AuthState {
+class RegisterLoadingState extends RegisterState {
   @override
   List<Object?> get props => [];
 }
 
-class AuthErrorState extends AuthState {
+class RegisterErrorState extends RegisterState {
   String msg;
-  AuthErrorState({required this.msg});
+  RegisterErrorState({required this.msg});
   @override
   List<Object?> get props => [msg];
   @override

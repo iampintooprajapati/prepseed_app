@@ -13,6 +13,8 @@ class CustomInputForm extends StatelessWidget {
   final VoidCallback? onTap;
   final bool? readOnly;
   final String? Function(String?)? validator;
+  final Widget? suffixIcon;
+
   const CustomInputForm(
       {super.key,
       this.icon,
@@ -24,6 +26,7 @@ class CustomInputForm extends StatelessWidget {
       this.onTap,
       this.readOnly,
       this.validator,
+      this.suffixIcon,
       this.controller});
 
   @override
@@ -43,6 +46,7 @@ class CustomInputForm extends StatelessWidget {
         validator: validator,
         cursorColor: Colors.black,
         decoration: InputDecoration(
+          suffixIcon: suffixIcon,
           filled: true,
           fillColor: Colors.white,
           disabledBorder: OutlineInputBorder(
