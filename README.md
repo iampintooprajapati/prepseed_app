@@ -1,16 +1,14 @@
 # prepseed_app
 
-A new Flutter project.
 
-## Getting Started
+- [Android release apk ](https://drive.google.com/file/d/1e25tYmXobZsrA8ncUaiPHsYWdNzE7sGn/view?usp=sharing)
 
-This project is a starting point for a Flutter application.
+## Packages use in this app 
+- http: ^1.1.2
+- bloc: ^8.1.2
+- flutter_bloc: ^8.1.3
+- equatable: ^2.0.5
+- shared_preferences: ^2.2.2
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## state management  
+- Bloc state management 
